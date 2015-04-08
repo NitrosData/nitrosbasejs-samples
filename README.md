@@ -1,0 +1,2 @@
+# nitrosbasejs-samples
+test
