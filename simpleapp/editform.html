@@ -1,0 +1,70 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example - example-example32-production</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <link href="http://bootswatch.com/cerulean/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <style>
+        .form-control {
+            border-width: 2px;
+        }
+    </style>
+</head>
+<body ng-app="formExample" ng-controller="ExampleController">
+    <div class="container">
+        <div class="col-md-12">
+            <h1>Simple Bootstrap + Angular.js form</h1>
+            <br />
+        </div>
+        <form name="myForm">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="firstname">First Name:</label>
+                    <input class="form-control" id="firstname" type="text" placeholder="Enter first name" ng-model="user.firstname" required autofocus />
+                </div>
+                <div class="form-group">
+                    <label for="lastname">Last Name:</label>
+                    <input class="form-control" type="text" id="lastname" placeholder="Enter last name" ng-model="user.lastname" required />
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input class="form-control" type="email" id="email" name="input" placeholder="Enter email" ng-model="user.email" required>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="comment">Comment:</label>
+                    <textarea rows="9" class="form-control" id="comment" placeholder="Enter comment" ng-model="user.comment"></textarea>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <input class="btn btn-primary" type="submit" ng-click="insert(myForm.$valid, user)" value="Add new user" />
+                <input class="btn btn-info" type="submit" ng-click="update(myForm.$valid, user)" value="Update" /><br /><br />
+                Form data = {{user | json}}<br />
+                Sent data = {{sended | json}}
+            </div>
+        </form>
+    </div>
+
+    <script>
+        angular.module('formExample', [])
+            .controller('ExampleController', ['$scope', '$http', function ($scope, $http) {
+                $scope.update = function (isvalid, user) {
+                    if (!isvalid)
+                        return;
+                    $scope.sended = angular.copy(user);
+                    $http.post('http://nitrosdata.com/service/sandboxdb/user', JSON.stringify(user))
+                        .success(function (data, status, headers, config) { $scope.user = data.d.results; });
+                };
+                $scope.insert = function (isvalid, user) {
+                    if (!isvalid)
+                        return;
+                    user.id = undefined;
+                    $scope.update(isvalid, user);
+                }
+            }]);
+    </script>
+</body>
+</html>

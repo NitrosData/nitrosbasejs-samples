@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Devexpress Grid with grouping</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Theme -->
+    <link href="http://cdn3.devexpress.com/jslib/14.2.6/css/dx.common.css" rel="stylesheet" />
+    <link rel="dx-theme" data-theme="generic.light" href="http://cdn3.devexpress.com/jslib/14.2.6/css/dx.light.css" data-active="true" />
+    <link href="http://nitrosdata.com/dx.nb.light.css" rel="stylesheet" />
+
+    <!-- Scripts -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/globalize/0.1.1/globalize.min.js"></script>
+    <script src="http://cdn3.devexpress.com/jslib/14.2.6/js/dx.webappjs.js"></script>
+</head>
+<body style="margin: 0">
+    <br />
+    <div id="gridContainer" style="height:500px"></div>
+    <script>
+        $(function () {
+            var priority = [
+            { name: "High", value: 4 },
+            { name: "Urgent", value: 3 },
+            { name: "Normal", value: 2 },
+            { name: "Low", value: 1 }];
+
+            $("#gridContainer").dxDataGrid({
+                dataSource: {
+                    store: {
+                        type: 'odata',
+                        url: 'http://nitrosdata.com/service/testdb/task'
+                    }
+                },
+                scrolling: {
+                    mode: 'virtual'
+                },
+                groupPanel: {
+                    visible: true
+                },
+                rowAlternationEnabled: true,
+                columns: [
+                    {
+                        dataField: 'id',
+                        width: 90,
+                        sortOrder: 'asc'
+                    }, {
+                        caption: 'Subject',
+                        dataField: 'Task_Subject',
+                    }, {
+                        caption: 'Status',
+                        dataField: 'Task_Status',
+                        groupIndex: 0
+                    }, {
+                        caption: 'Priority',
+                        dataField: 'Task_Priority',
+                        lookup: {
+                            dataSource: priority,
+                            valueExpr: 'value',
+                            displayExpr: 'name'
+                        },
+                        groupIndex: 1
+                    }, {
+                        caption: 'Assigned To',
+                        dataField: 'Employee',
+                    }, {
+                        caption: 'Start Date',
+                        dataField: 'Task_Start_Date',
+                        dataType: 'date',
+                        width: 90
+                    }, {
+                        caption: 'Due Date',
+                        dataField: 'Task_Due_Date',
+                        dataType: 'date',
+                        width: 90
+                    }
+                ]
+            });
+        });
+    </script>
+</body>
+</html>

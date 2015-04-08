@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Devexpress Grid</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Theme -->
+    <link href="http://cdn3.devexpress.com/jslib/14.2.6/css/dx.common.css" rel="stylesheet" />
+    <link rel="dx-theme" data-theme="generic.light" href="http://cdn3.devexpress.com/jslib/14.2.6/css/dx.light.css" data-active="true" />
+    <link href="http://nitrosdata.com/dx.nb.light.css" rel="stylesheet" />
+
+    <!-- Scripts -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/globalize/0.1.1/globalize.min.js"></script>
+    <script src="http://cdn3.devexpress.com/jslib/14.2.6/js/dx.webappjs.js"></script>
+</head>
+<body style="margin: 0">
+    <br />
+    <div id="gridContainer" style="height:auto"></div>
+    <script>
+        $(function () {
+            $("#gridContainer").dxDataGrid({
+                dataSource: {
+                    paginate: true,
+                    store: new DevExpress.data.ODataStore({
+                        type: 'odata',
+                        url: 'http://nitrosdata.com/service/testdb/person'
+                    })
+                },
+                paging: { pageSize: 10 },
+                rowAlternationEnabled: true,
+                columnAutoWidth: true,
+                columns: ['id', 'firstname', 'lastname'],
+                loadPanel: false
+            });
+        });
+    </script>
+</body>
+</html>

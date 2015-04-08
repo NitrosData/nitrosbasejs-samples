@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>jqGrid test</title>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/blitzer/jquery-ui.min.css" rel="stylesheet" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqgrid/4.6.0/css/ui.jqgrid.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqgrid/4.6.0/js/jquery.jqGrid.src.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqgrid/4.6.0/js/i18n/grid.locale-en.js"></script>
+
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <table id="jqGrid"></table>
+    <div id="jqGridPager"></div>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#jqGrid").jqGrid({
+                url: 'http://nitrosdata.com/service/testdb/person?callback=?&$inlinecount=all',
+                mtype: "GET",
+                datatype: "jsonp",
+                jsonReader: {
+                    root: "d.results",
+                    page: function (obj) { return (obj.d.__skip + obj.d.__top) / obj.d.__top; },
+                    total: function (obj) { return Math.ceil(obj.d.__count / obj.d.__top); },
+                    records: function (obj) { return obj.d.__count; },
+                    repeatitems: false,
+                    id: "id"
+                },
+                colModel: [{ name: 'id', key: true }, { name: 'firstname' }, { name: 'lastname' }],
+                viewrecords: true,
+                autowidth: true,
+                shrinkToFit: true,
+                height: "auto",
+                rowNum: 20,
+                pager: "#jqGridPager"
+            });
+        });
+
+    </script>
+</body>
+</html>
