@@ -1,46 +1,48 @@
-﻿<!DOCTYPE html>
-<html>
+﻿<html>
 <head>
-    <base href="http://demos.telerik.com/kendo-ui/grid/remote-data-binding">
+    <base href="http://demos.telerik.com/kendo-ui/grid/virtualization-remote-data">
+    <title></title>
+    <link rel="stylesheet" href="http://cdn.kendostatic.com/2015.1.408/styles/kendo.common.min.css" />
+    <link rel="stylesheet" href="http://cdn.kendostatic.com/2015.1.408/styles/kendo.metro.min.css" />
+
+    <script src="http://cdn.kendostatic.com/2015.1.408/js/jquery.min.js"></script>
+    <script src="http://cdn.kendostatic.com/2015.1.408/js/kendo.all.min.js"></script>
     <style>
         html {
-            font-size: 12px;
+            font-size: 14px;
             font-family: Arial, Helvetica, sans-serif;
         }
 
         body {
             margin: 0;
         }
-    </style>
-    <title></title>
-    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.3.1316/styles/kendo.common.min.css" />
-    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.3.1316/styles/kendo.flat.min.css" />
-    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.3.1316/styles/kendo.dataviz.min.css" />
-    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.3.1316/styles/kendo.dataviz.default.min.css" />
 
-    <script src="http://cdn.kendostatic.com/2014.3.1316/js/jquery.min.js"></script>
-    <script src="http://cdn.kendostatic.com/2014.3.1316/js/kendo.all.min.js"></script>
+        .k-header, .k-treemap-title, .k-grid-header .k-header > .k-link {
+            color: black;
+            font-weight: 700;
+        }
+    </style>
 </head>
 <body>
-
     <div id="example">
-        <div id="grid"></div>
+        <div id="grid"> </div>
         <script>
             $(document).ready(function () {
                 $("#grid").kendoGrid({
                     dataSource: {
                         type: "odata",
+                        serverPaging: true,
+                        serverSorting: true,
+                        pageSize: 100,
                         transport: {
                             read: "http://nitrosdata.com/service/testdb/person"
-                        },
-                        pageSize: 20,
-                        serverPaging: true,
-                        serverFiltering: true,
-                        serverSorting: true
+                        }
                     },
-                    filterable: true,
+                    height: 543,
+                    scrollable: {
+                        virtual: true
+                    },
                     sortable: true,
-                    pageable: true,
                     columns: ["id", "firstname", "lastname"]
                 });
             });
